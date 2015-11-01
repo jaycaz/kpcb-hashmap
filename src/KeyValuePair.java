@@ -1,8 +1,9 @@
 // Jordan Cazamias
 // KeyValuePair.java: Helper class to store keys and values together
 
-import javax.xml.crypto.dsig.keyinfo.KeyValue;
-
+/**
+ * Stores a (String, Object) pair, used as entries for the hash map
+ */
 public class KeyValuePair {
     private String _key;
     private Object _value;
@@ -12,12 +13,6 @@ public class KeyValuePair {
         _key = key;
         _value = value;
     }
-
-
-//    public KeyValuePair(KeyValuePair kvp) {
-//        _key = kvp.getKey();
-//        value = kvp.getValue();
-//    }
 
     // Getters
     public String getKey() {
