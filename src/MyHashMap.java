@@ -141,8 +141,12 @@ public class MyHashMap extends AbstractHashMap {
         if(str == null) {
             return 0;
         }
+        int hash = str.hashCode() % size;
+        if(hash < 0) {
+            hash += size;
+        }
 
-        return str.hashCode() % size;
+        return hash;
     }
 
 }

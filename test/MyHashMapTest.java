@@ -163,14 +163,15 @@ public class MyHashMapTest {
         assertEquals("Empty string value does not hash to 0", map.getHash(""), 0);
 
         // Make sure that hash code is within bounds
-        for(int i = 0; i < SIZE; i++) {
+        for(int i = 1; i < 100000000; i *= 2) {
             int hash = map.getHash(Integer.toString(i));
             assertTrue("Index " + i + " hashes to the value " + hash + ", which is out of bounds (" + SIZE + ")",
-                    hash < SIZE);
+                    0 <= hash && hash < SIZE);
         }
     }
 
     public String valueString(int i) {
         return new String("This is entry " + i);
     }
+
 }
