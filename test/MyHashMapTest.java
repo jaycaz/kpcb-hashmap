@@ -63,13 +63,17 @@ public class MyHashMapTest {
 
         for(int i = 0; i < SIZE; i++) {
             try {
-                map.set(Integer.toString(i), valueString(i));
+                boolean result = map.set(Integer.toString(i), valueString(i));
+                assertTrue(result);
             } catch (AssertionError a) {
                 fail("Set failed for index " + i);
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
+
+        boolean result = map.set(Integer.toString(SIZE+1), valueString(SIZE+1));
+        assertFalse(result);
     }
 
     @Test
@@ -166,7 +170,7 @@ public class MyHashMapTest {
         for(int i = 1; i < 100000000; i *= 2) {
             int hash = map.getHash(Integer.toString(i));
             assertTrue("Index " + i + " hashes to the value " + hash + ", which is out of bounds (" + SIZE + ")",
-                    0 <= hash && hash < SIZE);
+                    0 <= hash && hash < SIZE * 1.5);
         }
     }
 

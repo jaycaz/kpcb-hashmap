@@ -7,19 +7,21 @@
  */
 public class MyHashMap extends AbstractHashMap {
 
-    private int size;
+    private int size; // Real size of map behind the scenes
+    private int capacity; // Effective, "logical" capacity of map
+    private static float INFLATE_AMOUNT = 0.33f; // Amount to inflate size of table in order to prevent high load values
     private int numEntries;
     private KeyValuePair[] table;
 
     // Null string is reserved for the special "deleted" entry
     public static final KeyValuePair DELETED = new KeyValuePair(null, null);
 
-    public MyHashMap(int sz) {
-        super(sz);
+    public MyHashMap(int cap) {
+        super(cap);
 
-        size = sz;
-        // TODO: experiment with different table sizes; if so, change instances of size below
-        table = new KeyValuePair[sz];
+        capacity = cap;
+        size = (int) (cap * (1 + INFLATE_AMOUNT));
+        table = new KeyValuePair[size];
     }
 
     @Override
@@ -28,20 +30,16 @@ public class MyHashMap extends AbstractHashMap {
             return false;
         }
 
+        if(numEntries >= capacity) {
+            return false;
+        }
+
         // Perform linear probing
         int index = getHash(key);
-        int numProbes = 0;
         KeyValuePair entry = table[index];
 
         while(entry != null && !entry.getKey().equals(key)) {
             index = (index + 1) % size;
-            numProbes++;
-
-            if(numProbes == size) {
-                // Hash table is full, return failure
-                return false;
-            }
-
             entry = table[index];
         }
 
@@ -84,7 +82,7 @@ public class MyHashMap extends AbstractHashMap {
 
     @Override
     public float load() {
-        return (float) numEntries / size;
+        return (float) numEntries / capacity;
     }
 
     /**
@@ -135,7 +133,7 @@ public class MyHashMap extends AbstractHashMap {
     /**
      * Hash function for table
      * @param str value of string to be hashed
-     * @return hash value in range [0, size)
+     * @return hash value in range [0, capacity)
      */
     public int getHash(String str) {
         if(str == null) {
