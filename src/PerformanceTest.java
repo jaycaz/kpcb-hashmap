@@ -1,32 +1,24 @@
-import org.junit.Before;
-import org.junit.Test;
-
+// Jordan Cazamias
+// PerformanceTest.java
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-import static org.junit.Assert.*;
-
 /**
- * Performance tests for MyHashMap
+ * The MyHashMap class is ready to be used in any Java code.
+ * In lieu of an interactive script, running this program will
+ * run a performance test to gather statistics on the program's running time.
  */
-public class MyHashMapPerfTest {
+public class PerformanceTest {
 
-    public static final int SIZE = 10000;
-    public static final int NS_PER_S = 1000000000;
-    Random rand;
-    MyHashMap map;
+    public static void main(String args[]) {
 
-    @Before
-    public void setUp() {
-        rand = new Random();
-        rand.setSeed(0);
-    }
+        final int SIZE = 1000000;
+        final int NS_PER_S = 1000000000;
+        Random rand = new Random();
 
-    @Test
-    public void fillMapRandomly() {
-        map = new MyHashMap(SIZE);
+        MyHashMap map = new MyHashMap(SIZE);
         List<Long> times = new ArrayList<Long>(SIZE);
         long totalNS = 0;
 
@@ -61,5 +53,4 @@ public class MyHashMapPerfTest {
         System.out.println("Q3: " + q3Time + " s");
         System.out.println("Max: " + longestTime + " s");
     }
-
 }
